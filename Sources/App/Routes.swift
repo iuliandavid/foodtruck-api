@@ -1,4 +1,5 @@
 import Vapor
+import MongoKitten
 
 extension Droplet {
     func setupRoutes() throws {
@@ -20,6 +21,10 @@ extension Droplet {
 
         get("description") { req in return req.description }
         
-        try resource("posts", PostController.self)
+    
+//        print(config["server", "securityLayer"]?.string ?? "gherle")
+
+        try resource("users", UserController.self)
+        
     }
 }

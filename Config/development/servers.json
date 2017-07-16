@@ -1,0 +1,7 @@
+{
+    "mongodb": {
+        "host": "$MONGODB_HOST:localhost",
+        "port": "$MONGODB_PORT:31564",
+        "port": "$MONGODB_DB:foodtruck"
+    }
+}
