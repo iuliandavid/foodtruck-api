@@ -1,6 +1,16 @@
 import MongoKitten
+import SwiftyBeaver
+
+//setup the logger
+let log = SwiftyBeaver.self
 
 
+let config: Config = {
+    let config = try! Config()
+    let console = ConsoleDestination()  // log to Xcode Console
+    log.addDestination(console)
+    return config
+}()
 
 final class ConfigDB {
     

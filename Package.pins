@@ -92,10 +92,22 @@
       "version": "0.2.3"
     },
     {
+      "package": "MongoDriver",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/mongo-driver.git",
+      "version": "2.0.0"
+    },
+    {
       "package": "MongoKitten",
       "reason": null,
       "repositoryURL": "https://github.com/OpenKitten/MongoKitten.git",
       "version": "4.0.11"
+    },
+    {
+      "package": "MongoProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/mongo-provider.git",
+      "version": "2.0.0"
     },
     {
       "package": "Multipart",

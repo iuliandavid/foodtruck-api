@@ -1,15 +1,7 @@
-import SwiftyBeaver
-
-//setup the logger
-let log = SwiftyBeaver.self
+import SwiftyBeaverProvider
+import FluentProvider
 
 
-let config: Config = {
-    let config = try! Config()
-    let console = ConsoleDestination()  // log to Xcode Console
-    log.addDestination(console)
-    return config
-}()
 
 
 extension Config {
@@ -17,6 +9,26 @@ extension Config {
     
     public func getConfig() -> Config {
         return config
+    }
+    
+    public func setup() throws {
+        // allow fuzzy conversions for these types
+        // (add your own types here)
+        Node.fuzzy = [Row.self, JSON.self, Node.self]
+        
+        try setupProviders()
+        try setupPreparations()
+    }
+    
+    /// Configure providers
+    private func setupProviders() throws {
+        try addProvider(FluentProvider.Provider.self)
+    }
+    
+    /// Add all models that should have their
+    /// schemas prepared before the app boots
+    private func setupPreparations() throws {
+        preparations.append(Post.self)
     }
 }
 

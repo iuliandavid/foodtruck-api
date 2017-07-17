@@ -1,4 +1,5 @@
 import App
+import MongoProvider
 
 /// We have isolated all of our App's logic into
 /// the App module because it makes our app
@@ -19,8 +20,11 @@ import App
 
 let config = try Config()
 
+try config.addProvider(MongoProvider.Provider.self)
 //force loading condfiguration
 let _ = config.getConfig()
+try config.setup()
+
 
 let drop = try Droplet(config)
 try drop.setup()

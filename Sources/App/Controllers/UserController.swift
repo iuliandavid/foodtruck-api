@@ -37,32 +37,7 @@ final class UserController: ResourceRepresentable {
             }
             
         }
-//    post("user") { request in
-//
-//    guard let username = request.data["username"]?.string,
-//    let email = request.data["email"]?.string else {
-//    throw Abort.badRequest
-//    }
-//    
-//    let user = User(username: username, email: email)
-//    
-//    try user.save()
-//    
-//    return "Created user with username: \(username) and email: \(email) "
-//    
-//    }
-//    
-//    get("user") { request in
-//    guard let id = request.headers["id"]?.string else {
-//    throw Abort.badRequest
-//    }
-//    
-//    let user = try User(id: id)
-//    
-//    return "found user with username: \(user.username) and email: \(user.email)"
-//    
-//    
-//    }
+
     
     func makeResource() -> Resource<User> {
                 return Resource(

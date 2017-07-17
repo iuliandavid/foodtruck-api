@@ -23,7 +23,7 @@ extension Droplet {
         
     
 //        print(config["server", "securityLayer"]?.string ?? "gherle")
-
+        try resource("posts", PostController.self)
         try resource("users", UserController.self)
         
     }
