@@ -28,13 +28,16 @@ final class ConfigDB {
     private init() {
         var newdatabase: Database?
         
-        log.info("host from config: \(config["servers", "mongodb", "host"]?.string ?? "gherle")")
-        guard let mongo_host = config["servers", "mongodb", "host"]?.string, let mongo_port = config["servers", "mongodb", "port"]?.string,
-        let mongo_db = config["servers", "mongodb", "host"]?.string else {
+        log.info("host from config: \(config["mongo", "url"]?.string ?? "gherle")")
+        // guard let mongo_host = config["servers", "mongodb", "host"]?.string, let mongo_port = config["servers", "mongodb", "port"]?.string,
+        // let mongo_db = config["servers", "mongodb", "host"]?.string else {
+        //     fatalError()
+        // }
+        guard let mongo_url = config["mongo", "url"]?.string else {
             fatalError()
         }
         do {
-            let server = try Server("mongodb://\(mongo_host):\(mongo_port)/")
+            let server = try Server(mongo_url)
             if server.isConnected {
                 print("Successfully connected!")
             } else {
