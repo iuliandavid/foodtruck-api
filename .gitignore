@@ -7,6 +7,7 @@ Config/secrets
 ### Vapor Patch ###
 Packages
 .build
+.vscode
 xcuserdata
 *.xcodeproj
 DerivedData/

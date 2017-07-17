@@ -8,10 +8,10 @@ final class Post: Model {
     // MARK: Properties and database keys
     
     /// The content of the post
-    var content: String
+    var content: String?
     
     /// Another column
-    var obs: String
+    var obs: String?
     
     /// The column names for `id` and `content` in the database
     static let idKey = "_id"
@@ -19,7 +19,7 @@ final class Post: Model {
     static let obsKey = "obs"
 
     /// Creates a new Post
-    init(content: String, obs: String) {
+    init(content: String?, obs: String?) {
         self.content = content
         self.obs = obs
     }
@@ -78,9 +78,15 @@ extension Post: JSONConvertible {
     
     func makeJSON() throws -> JSON {
         var json = JSON()
-        try json.set(Post.idKey, id?.string)
-        try json.set(Post.contentKey, content)
-        try json.set(Post.obsKey, obs)
+        if let _id = id?.string {
+            try json.set(Post.idKey, _id)
+        }
+        if content != nil {
+            try json.set(Post.contentKey, content)
+        }
+        if obs != nil {
+            try json.set(Post.obsKey, obs)
+        }
         return json
     }
 }
