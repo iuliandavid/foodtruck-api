@@ -29,10 +29,9 @@ final class ConfigDB {
         var newdatabase: Database?
         
         log.info("host from config: \(config["mongo", "url"]?.string ?? "gherle")")
-        // guard let mongo_host = config["servers", "mongodb", "host"]?.string, let mongo_port = config["servers", "mongodb", "port"]?.string,
-        // let mongo_db = config["servers", "mongodb", "host"]?.string else {
-        //     fatalError()
-        // }
+         guard let mongo_db = config["servers", "mongodb", "host"]?.string else {
+             fatalError()
+         }
         guard let mongo_url = config["mongo", "url"]?.string else {
             fatalError()
         }

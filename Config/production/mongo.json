@@ -1,3 +1,4 @@
 {
-    "url": "$MONGODB_URI"
+    "url": "$MONGODB_URI",
+    "database": "foodtruck"
 }
