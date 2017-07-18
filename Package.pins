@@ -2,6 +2,18 @@
   "autoPin": true,
   "pins": [
     {
+      "package": "Auth",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/auth.git",
+      "version": "1.0.0"
+    },
+    {
+      "package": "AuthProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/auth-provider.git",
+      "version": "1.0.2"
+    },
+    {
       "package": "BCrypt",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/bcrypt.git",
@@ -174,6 +186,18 @@
       "reason": null,
       "repositoryURL": "https://github.com/vapor/tls.git",
       "version": "2.0.4"
+    },
+    {
+      "package": "Validation",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/validation.git",
+      "version": "1.0.1"
+    },
+    {
+      "package": "ValidationProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/validation-provider.git",
+      "version": "1.2.0"
     },
     {
       "package": "Vapor",

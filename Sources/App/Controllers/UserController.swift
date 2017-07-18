@@ -3,15 +3,15 @@ import HTTP
 import MongoKitten
 import Cheetah
 
-final class UserController: ResourceRepresentable {
+final class UserOldController: ResourceRepresentable {
     
         /// When consumers call 'POST' on '/posts' with valid JSON
         /// create and save the user
         func create(request: Request) throws -> ResponseRepresentable {
-            let post = try request.user()
-            try post.save()
+            let user = try request.userOld()
+            try user.save()
 //            return User.collection.findOne("_id" == post.id)
-            guard let userDocument = try User.collection.findOne("_id" == post.id) else {
+            guard let userDocument = try UserOld.collection.findOne("_id" == user.id) else {
                 throw Abort.badRequest
             }
             
@@ -20,7 +20,7 @@ final class UserController: ResourceRepresentable {
     
         /// When the consumer calls 'GET' on a specific resource, ie:
         /// '/user/13rd88' we should show that specific post
-        func show(req: Request, user: User) throws -> ResponseRepresentable {
+        func show(req: Request, user: UserOld) throws -> ResponseRepresentable {
             return user
         }
     
@@ -30,16 +30,16 @@ final class UserController: ResourceRepresentable {
             
             if let id = req.headers["id"]?.string{
                 
-                    return try User.findById(id: id)
+                    return try UserOld.findById(id: id)
                
             }else {
-                return try User.findAll()
+                return try UserOld.findAll()
             }
             
         }
 
     
-    func makeResource() -> Resource<User> {
+    func makeResource() -> Resource<UserOld> {
                 return Resource(
 //                    index: index,
                     index: showWithHeader,
@@ -81,4 +81,4 @@ extension Request {
 /// be initialized we can conform it to EmptyInitializable.
 ///
 /// This will allow it to be passed by type.
-extension UserController: EmptyInitializable { }
+extension UserOldController: EmptyInitializable { }
