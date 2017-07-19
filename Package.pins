@@ -20,16 +20,22 @@
       "version": "1.0.0"
     },
     {
+      "package": "BSON",
+      "reason": null,
+      "repositoryURL": "https://github.com/OpenKitten/BSON.git",
+      "version": "5.1.4"
+    },
+    {
       "package": "Bits",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/bits.git",
       "version": "1.0.0"
     },
     {
-      "package": "BSON",
+      "package": "CTLS",
       "reason": null,
-      "repositoryURL": "https://github.com/OpenKitten/BSON.git",
-      "version": "5.1.4"
+      "repositoryURL": "https://github.com/vapor/ctls.git",
+      "version": "1.0.0"
     },
     {
       "package": "Cheetah",
@@ -60,12 +66,6 @@
       "reason": null,
       "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
       "version": "0.6.9"
-    },
-    {
-      "package": "CTLS",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/ctls.git",
-      "version": "1.0.0"
     },
     {
       "package": "Debugging",
@@ -102,12 +102,6 @@
       "reason": null,
       "repositoryURL": "https://github.com/OpenKitten/KittenCore.git",
       "version": "0.2.3"
-    },
-    {
-      "package": "KittenCTLS",
-      "reason": null,
-      "repositoryURL": "https://github.com/OpenKitten/KittenCTLS.git",
-      "version": "1.0.1"
     },
     {
       "package": "MongoDriver",
@@ -152,6 +146,12 @@
       "version": "2.0.0"
     },
     {
+      "package": "SQLite",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/sqlite.git",
+      "version": "2.0.0"
+    },
+    {
       "package": "Schrodinger",
       "reason": null,
       "repositoryURL": "https://github.com/OpenKitten/Schrodinger.git",
@@ -162,12 +162,6 @@
       "reason": null,
       "repositoryURL": "https://github.com/vapor/sockets.git",
       "version": "2.0.1"
-    },
-    {
-      "package": "SQLite",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/sqlite.git",
-      "version": "2.0.0"
     },
     {
       "package": "SwiftyBeaver",

@@ -28,6 +28,7 @@ extension Droplet {
         
         try setupUnauthenticatedRoutes()
         try setupPasswordProtectedRoutes()
+        try setupTokenProtectedRoutes()
     }
 
     private func setupUnauthenticatedRoutes() throws {
@@ -101,7 +102,7 @@ extension Droplet {
         // the User type can be passed to this middleware since it
         // conforms to TokenAuthenticatable
         let token = grouped([
-            TokenAuthenticationMiddleware(User.self)
+            CustomTokenMiddleware(User.self)
         ])
 
         // simply returns a greeting to the user that has been authed

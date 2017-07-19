@@ -19,11 +19,6 @@ final class ConfigDB {
     
     let database:Database
     
-    //    //setup Mongo
-    //    fileprivate func setupMongo() -> Database? {
-    //
-    //        return database
-    //    }
     
     private init() {
         var newdatabase: Database?

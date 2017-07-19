@@ -23,12 +23,14 @@ final class Token: Model {
     static let accessTokenKey = "accessToken"
     static let refreshTokenKey = "refreshToken"
     static let expiryDateKey = "expiryDate"
+    
+    static let EXPIRE_SECONDS = 30 * 60;
     /// Creates a new Token
     init(accessToken: String, refreshToken: String, user: User) throws {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         let calendar = Calendar.current
-        expiryDate = calendar.date(byAdding: .minute, value: 5, to: Date())!
+        expiryDate = calendar.date(byAdding: .second, value: Token.EXPIRE_SECONDS, to: Date())!
         //TODO : test expiry date 
         // Date().timeIntervalSince(expiryDate) > 5 minutes
         userId = try user.assertExists()
@@ -113,3 +115,9 @@ extension Token: JSONRepresentable {
 // MARK: HTTP
 /// Allows the Token to be returned directly in route closures.
 extension Token: ResponseRepresentable { }
+
+extension Token: CustomDebugStringConvertible {
+         var debugDescription: String {
+             return "Token(accessToken: \(accessToken), refreshToken: \(refreshToken), expiryDate: \(expiryDate))"
+         }
+     }
