@@ -1,7 +1,7 @@
 import Authentication
 import Foundation
-// MARK: Data structure
 
+// MARK: Data structure
 public struct CustomToken: Credentials {
     public let accessToken: String
     public let refreshToken: String

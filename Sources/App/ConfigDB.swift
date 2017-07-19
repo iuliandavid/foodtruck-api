@@ -23,7 +23,6 @@ final class ConfigDB {
     private init() {
         var newdatabase: Database?
         
-        log.info("host from config: \(config["mongo", "url"]?.string ?? "gherle")")
          guard let mongo_db = config["servers", "mongodb", "host"]?.string else {
              fatalError()
          }
@@ -33,9 +32,9 @@ final class ConfigDB {
         do {
             let server = try Server(mongo_url)
             if server.isConnected {
-                print("Successfully connected!")
+                log.info("Successfully connected!")
             } else {
-                print("Connection failed")
+                log.error("Connection failed")
             }
             newdatabase = server[mongo_db]
         } catch {

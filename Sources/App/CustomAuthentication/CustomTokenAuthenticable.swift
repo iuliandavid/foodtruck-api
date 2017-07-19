@@ -54,7 +54,17 @@ import Fluent
 extension CustomTokenAuthenticable where Self: Entity, Self.TokenType: Entity {
     public static func authenticate(_ token: String) throws -> Self {
         let user: Self
-        log.debug("creds \(token)")
+        log.debug("input token \(token)")
+        
+        guard let foundToken = try Self.TokenType.makeQuery()
+            .filter(accessKey, token)
+            .first() as? Token, foundToken.expiryDate.timeIntervalSinceNow >= 0
+            else {
+                throw AuthenticationError.unspecified(CustomAuthenticationError.accessTokenExpired)
+        }
+        
+        log.debug("token found: \(foundToken)")
+        
         guard let foundUser = try Self.makeQuery()
             .join(Self.TokenType.self)
             .filter(Self.TokenType.self, accessKey, token)
@@ -62,28 +72,9 @@ extension CustomTokenAuthenticable where Self: Entity, Self.TokenType: Entity {
             else {
                 throw AuthenticationError.invalidCredentials
         }
-        
-        guard let foundToken = try Self.TokenType.makeQuery()
-            .filter(accessKey, token)
-            .first()
-            else {
-                throw AuthenticationError.invalidCredentials
-        }
-        print("token found: \(foundToken)")
-        print("user found: \(foundUser)")
-        guard let match = try Self
-            .makeQuery()
-            .join(Self.TokenType.self)
-            .filter(Self.TokenType.self, accessKey, token)
-            .filter(Self.TokenType.self, expiryKey, Filter.Comparison.greaterThanOrEquals, Date())
-            .first()
-            else {
-                throw AuthenticationError.invalidCredentials
-        }
-        
-        user = match
-        
+        user = foundUser
         
         return user
+
     }
 }
