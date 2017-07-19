@@ -19,8 +19,6 @@ extension CustomAuthenticationError: CustomDebugStringConvertible {
     public var debugDescription: String {
         let reason: String
         switch self {
-            
-            
         case .accessTokenExpired:
             reason = "Access Token Has Expired"
         case .invalidRefreshToken:

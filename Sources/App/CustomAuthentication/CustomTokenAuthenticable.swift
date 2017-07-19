@@ -9,12 +9,14 @@
 import Authentication
 
 public protocol CustomTokenAuthenticable: Authenticatable {
+    
     /// The token entity that contains a foreign key
     /// pointer to the user table (or on the user table itself)
     associatedtype TokenType
+    
     // MARK:  AccessToken / RefreshToken
     /// Return the user matching the supplied
-    /// accessToken and refreshToken
+    /// accessToken if the user exists and token not expired
     static func authenticate(_: String) throws -> Self
     
     
@@ -31,7 +33,7 @@ public protocol CustomTokenAuthenticable: Authenticatable {
     
 }
 
-extension PasswordAuthenticatable {
+extension CustomTokenAuthenticable {
     public static var accessKey: String {
         return "accessToken"
     }
@@ -75,6 +77,6 @@ extension CustomTokenAuthenticable where Self: Entity, Self.TokenType: Entity {
         user = foundUser
         
         return user
-
+        
     }
 }

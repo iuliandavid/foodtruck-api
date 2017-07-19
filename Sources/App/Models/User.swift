@@ -138,22 +138,3 @@ extension User: CustomTokenAuthenticable {
     
 }
 
-
-extension TokenAuthenticatable where Self: User, Self.TokenType: Token {
-    internal static func authenticate(_ token: Token) throws -> Self {
-        guard let myToken = try Token.makeQuery().filter("accessToken", Filter.Comparison.equals, token.accessToken).first(),
-            myToken.expiryDate.timeIntervalSince(Date()) >= 0 else {
-                throw AuthenticationError.invalidBearerAuthorization
-        }
-        
-        guard let user = try Self.makeQuery()
-            .join(Self.TokenType.self)
-            .filter(Self.TokenType.self, "accessToken", token.accessToken)
-            .first()
-            else {
-                throw AuthenticationError.invalidCredentials
-        }
-        
-        return user
-    }
-}

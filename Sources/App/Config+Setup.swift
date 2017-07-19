@@ -1,5 +1,6 @@
 import SwiftyBeaverProvider
 import FluentProvider
+import MongoProvider
 import AuthProvider
 
 
@@ -23,6 +24,7 @@ extension Config {
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(FluentProvider.Provider.self)
+        try addProvider(MongoProvider.Provider.self)
         try addProvider(SwiftyBeaverProvider.Provider.self)
         try addProvider(AuthProvider.Provider.self)
     }

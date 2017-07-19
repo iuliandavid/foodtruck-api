@@ -106,7 +106,7 @@ struct UserOld {
 
         let results = try UserOld.collection.find()
         
-        let myResults = try results.map { $0 }
+        let myResults = results.map { $0 }
         log.info("results: \(myResults)")
         // if results.validatesAsArray() {
         //         let test = .array(results.arrayValue.map { $0.makeNode() })
