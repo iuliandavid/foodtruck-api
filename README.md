@@ -4,7 +4,9 @@
 
 # Authentication (OAuth2 like)
  - Create user: 
+     
      * POST {{url}}/users a json  
+
 ```javascript
 {
     "email": "example@example.com",
