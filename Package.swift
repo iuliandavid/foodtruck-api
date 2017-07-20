@@ -3,7 +3,8 @@ import PackageDescription
 let package = Package(
     name: "foodtruck-api",
     targets: [
-        Target(name: "App"),
+	Target(name: "CustomAuthentication"),
+        Target(name: "App", dependencies: ["CustomAuthentication"]),
         Target(name: "Run", dependencies: ["App"]),
     ],
     dependencies: [

@@ -1,6 +1,8 @@
 import Vapor
 import MongoKitten
 import AuthProvider
+import Routing
+import CustomAuthentication
 
 extension Droplet {
     func setupRoutes() throws {
@@ -24,10 +26,11 @@ extension Droplet {
         
     
         try resource("posts", PostController.self)
-        try resource("users", UserOldController.self)
+//        try resource("users", UserOldController.self)
         
         try setupUnauthenticatedRoutes()
         try setupPasswordProtectedRoutes()
+        try setupTokenProtectedRoutes()
     }
 
     private func setupUnauthenticatedRoutes() throws {
@@ -62,6 +65,29 @@ extension Droplet {
             try user.save()
             return user
         }
+        
+        // get a new access token
+        //
+        // POST /users/authorize/refresh_token
+        // <json containing the user email and the refresh token>
+        post("users","authorize","refresh_token") { req in
+            guard let json = req.json, let email = try? json.get("email") as String, let refreshToken = try? json.get("refresh_token") as String else {
+                throw Abort.badRequest
+            }
+            
+            guard let foundToken = try CustomToken.makeQuery().filter(CustomToken.self, "refreshToken", refreshToken)
+                .first() else {
+                    throw AuthenticationError.unspecified(CustomAuthenticationError.invalidRefreshToken)
+            }
+            
+            // ensure a user with this email exists
+            guard let foundUser = try foundToken.user.get(), foundUser.email == email else {
+                throw AuthenticationError.invalidCredentials
+            }
+            
+            return try self.generateNewToken(foundUser)
+
+        }
     }
 
 
@@ -87,31 +113,43 @@ extension Droplet {
         // Authorization: Basic <base64 email:password>
         password.post("login") { req in
             let user = try req.user()
-            let token = try Token.generate(for: user)
-            try token.save()
-            return token
+            
+            return try self.generateNewToken(user)
         }
     }
 
-/// Sets up all routes that can be accessed using
+    /// Sets up all routes that can be accessed using
     /// the authentication token received during login.
     /// All of our secure routes will go here.
     private func setupTokenProtectedRoutes() throws {
         // creates a route group protected by the token middleware.
         // the User type can be passed to this middleware since it
         // conforms to TokenAuthenticatable
-        let token = grouped([
-            TokenAuthenticationMiddleware(User.self)
-        ])
+       
+        let tokenGroup = grouped([CustomTokenMiddleware(User.self)]).grouped("api/v1")
+        
 
         // simply returns a greeting to the user that has been authed
         // using the token middleware.
         //
         // GET /me
         // Authorization: Bearer <token from /login>
-        token.get("me") { req in
+       
+        tokenGroup.get("profile/me") { req in
             let user = try req.user()
             return "Hello, \(user.name)"
         }
+        try tokenGroup.resource("users", UserOldController.self)
+    }
+    
+    private func generateNewToken(_ user: User) throws -> CustomToken {
+        //delete all the refresh token
+        let tokens = try CustomToken.makeQuery().filter("user__id", user.id?.string).all()
+        for deletableToken in tokens {
+            try deletableToken.delete()
+        }
+        let token = try CustomToken.generate(for: user)
+        try token.save()
+        return token
     }
 }

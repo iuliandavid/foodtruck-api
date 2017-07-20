@@ -4,6 +4,7 @@ import HTTP
 import Authentication
 import Validation
 import BCrypt
+import CustomAuthentication
 
 
 final class User: Model {
@@ -132,6 +133,9 @@ extension Request {
 // MARK: Token
 // This allows the User to be authenticated
 // with an access token.
-extension User: TokenAuthenticatable {
-    typealias TokenType = Token
+extension User: CustomTokenAuthenticable {
+    typealias TokenType = CustomToken
+    
+    
 }
+

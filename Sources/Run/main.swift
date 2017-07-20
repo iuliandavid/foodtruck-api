@@ -20,7 +20,7 @@ import MongoProvider
 
 let config = try Config()
 
-try config.addProvider(MongoProvider.Provider.self)
+//try config.addProvider(MongoProvider.Provider.self)
 //force loading condfiguration
 let _ = config.getConfig()
 try config.setup()
