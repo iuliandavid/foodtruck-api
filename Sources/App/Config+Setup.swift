@@ -34,7 +34,7 @@ extension Config {
     private func setupPreparations() throws {
         preparations.append(Post.self)
         preparations.append(User.self)
-        preparations.append(Token.self)
+        preparations.append(CustomToken.self)
     }
 }
 

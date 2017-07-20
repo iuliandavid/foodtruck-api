@@ -7,7 +7,7 @@
 //
 
 import HTTP
-import Authentication
+import AuthProvider
 
 public final class CustomTokenMiddleware<U: CustomTokenAuthenticable>: Middleware {
     public init(_ userType: U.Type = U.self) {}

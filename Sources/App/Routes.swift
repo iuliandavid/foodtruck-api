@@ -2,6 +2,7 @@ import Vapor
 import MongoKitten
 import AuthProvider
 import Routing
+import CustomAuthentication
 
 extension Droplet {
     func setupRoutes() throws {
@@ -74,7 +75,7 @@ extension Droplet {
                 throw Abort.badRequest
             }
             
-            guard let foundToken = try Token.makeQuery().filter(Token.self, "refreshToken", refreshToken)
+            guard let foundToken = try CustomToken.makeQuery().filter(CustomToken.self, "refreshToken", refreshToken)
                 .first() else {
                     throw AuthenticationError.unspecified(CustomAuthenticationError.invalidRefreshToken)
             }
@@ -141,13 +142,13 @@ extension Droplet {
         try tokenGroup.resource("users", UserOldController.self)
     }
     
-    private func generateNewToken(_ user: User) throws -> Token {
+    private func generateNewToken(_ user: User) throws -> CustomToken {
         //delete all the refresh token
-        let tokens = try Token.makeQuery().filter("user__id", user.id?.string).all()
+        let tokens = try CustomToken.makeQuery().filter("user__id", user.id?.string).all()
         for deletableToken in tokens {
             try deletableToken.delete()
         }
-        let token = try Token.generate(for: user)
+        let token = try CustomToken.generate(for: user)
         try token.save()
         return token
     }

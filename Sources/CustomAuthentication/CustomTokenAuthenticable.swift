@@ -5,7 +5,7 @@
 //  Created by iulian david on 7/19/17.
 //
 //
-
+import Foundation
 import Authentication
 
 public protocol CustomTokenAuthenticable: Authenticatable {
@@ -21,28 +21,28 @@ public protocol CustomTokenAuthenticable: Authenticatable {
     
     
     /// The key under which the user's access token or other identifing value is stored.
-    static var accessKey: String { get }
+    static var accessTokenKey: String { get }
     
     /// The key under which the user's refresh token
     /// is stored.
-    static var refreshKey: String { get }
+    static var refreshTokenKey: String { get }
     
     /// The key under which the user's token expiry date
     /// is stored.
-    static var expiryKey: String { get }
+    static var expiryDateKey: String { get }
     
 }
 
 extension CustomTokenAuthenticable {
-    public static var accessKey: String {
+    public static var accessTokenKey: String {
         return "accessToken"
     }
     
-    public static var refreshKey: String {
+    public static var refreshTokenKey: String {
         return "refreshToken"
     }
     
-    public static var expiryKey: String {
+    public static var expiryDateKey: String {
         return "expiryDate"
     }
 }
@@ -56,20 +56,19 @@ import Fluent
 extension CustomTokenAuthenticable where Self: Entity, Self.TokenType: Entity {
     public static func authenticate(_ token: String) throws -> Self {
         let user: Self
-        log.debug("input token \(token)")
         
-        guard let foundToken = try Self.TokenType.makeQuery()
-            .filter(accessKey, token)
-            .first() as? Token, foundToken.expiryDate.timeIntervalSinceNow >= 0
+        guard let _ = try Self.TokenType.makeQuery()
+            .filter(accessTokenKey, token)
+            .filter(expiryDateKey, Filter.Comparison.greaterThanOrEquals, Date())
+            .first()
             else {
                 throw AuthenticationError.unspecified(CustomAuthenticationError.accessTokenExpired)
         }
         
-        log.debug("token found: \(foundToken)")
         
         guard let foundUser = try Self.makeQuery()
             .join(Self.TokenType.self)
-            .filter(Self.TokenType.self, accessKey, token)
+            .filter(Self.TokenType.self, accessTokenKey, token)
             .first()
             else {
                 throw AuthenticationError.invalidCredentials
