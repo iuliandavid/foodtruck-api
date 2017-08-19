@@ -26,6 +26,9 @@ extension Droplet {
         
     
         try resource("posts", PostController.self)
+        let tests = TestController()
+        tests.addRoutes(drop: self)
+        
 //        try resource("users", UserOldController.self)
         
         try setupUnauthenticatedRoutes()

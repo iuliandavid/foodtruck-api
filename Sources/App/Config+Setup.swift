@@ -27,6 +27,7 @@ extension Config {
         try addProvider(MongoProvider.Provider.self)
         try addProvider(SwiftyBeaverProvider.Provider.self)
         try addProvider(AuthProvider.Provider.self)
+        log.debug(providers)
     }
     
     /// Add all models that should have their

@@ -1,6 +1,7 @@
 import MongoKitten
 import SwiftyBeaver
 
+
 //setup the logger
 let log = SwiftyBeaver.self
 
@@ -21,6 +22,7 @@ final class ConfigDB {
     
     
     private init() {
+        
         var newdatabase: Database?
         
          guard let mongo_db = config["servers", "mongodb", "host"]?.string else {
